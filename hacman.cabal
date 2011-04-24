@@ -1,0 +1,44 @@
+Name:          hacman
+Version:       0.0
+Stability:     Alpha
+Synopsis:      Package manager for Arch Linux in the flavor of pacman.
+Description:   Package manager for Arch Linux in the flavor of pacman.
+License:       GPL
+License-File:  LICENSE
+Build-Type:    Simple
+Cabal-Version: >=1.10
+Author:        Andreas Baldeau,
+               Daniel Ehlers
+Maintainer:    Andreas Baldeau <andreas@baldeau.net>,
+               Daniel Ehlers <danielehlers@mindeye.net>
+Homepage:      http://github.com/baldo/hacman
+Bug-Reports:   http://github.com/baldo/hacman/issues
+Category:      Distribution
+Tested-With:   GHC == 7.0.2
+
+Extra-Source-Files:
+    README
+
+Source-Repository head
+    Type:     git
+    Location: git://github.com/baldo/hacman
+
+Executable hacman
+    Main-Is:
+        Hacman.hs
+
+    Hs-Source-Dirs:
+        src
+
+    Default-Language:
+        Haskell2010
+
+    Build-Depends:
+        base == 4.*,
+        alpm == 0.0.*
+
+    Ghc-Options:
+        -Wall
+
+    Other-Modules:
+
