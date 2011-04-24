@@ -35,6 +35,7 @@ Executable hacman
 
     Build-Depends:
         base == 4.*,
+        mtl  == 2.0.*,
         alpm == 0.0.*
 
     Ghc-Options:
