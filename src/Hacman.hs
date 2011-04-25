@@ -6,6 +6,8 @@ where
 import Control.Monad.Trans
 import Distribution.ArchLinux.ALPM
 
+import Data.Maybe
+
 main :: IO ()
 main = do
     r <- alpm hacmanMain
@@ -17,7 +19,7 @@ main = do
             return ()
 
 hacmanMain :: ALPM ()
-hacmanMain = queryGroup
+hacmanMain = querySearchPackage ["haskell"]
 
 query :: ALPM ()
 query = do
@@ -47,6 +49,13 @@ querySearch = do
     packages <- databaseGetPackageCache db
     mapM_ displayPackage packages
 
+querySearchPackage :: [String] -> ALPM ()
+querySearchPackage packagenames = do
+  optionSetDatabasePath "/var/lib/pacman/"
+  db <- optionGetLocalDatabase
+  packages <- databaseSearch db packagenames
+  mapM_ displayPackage packages
+
 displayPackageSimple :: Package -> ALPM ()
 displayPackageSimple package = do
     name    <- packageGetName package
@@ -71,4 +80,3 @@ displayPackage package = do
             else
                 putStrLn ""
         putStrLn $ "    " ++ description
-
