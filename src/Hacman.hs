@@ -17,7 +17,7 @@ main = do
             return ()
 
 hacmanMain :: ALPM ()
-hacmanMain = querySearch
+hacmanMain = queryGroup
 
 query :: ALPM ()
 query = do
@@ -25,6 +25,20 @@ query = do
     db <- optionGetLocalDatabase 
     packages <- databaseGetPackageCache db
     mapM_ displayPackageSimple packages 
+
+queryGroup :: ALPM ()
+queryGroup = do
+    optionSetDatabasePath "/var/lib/pacman/"
+    db <- optionGetLocalDatabase 
+    groups <- databaseGetGroupCache db
+    flip mapM_ groups $ \group -> do
+        groupName <- groupGetName group
+        packages <- groupGetPackages group
+        flip mapM_ packages $ \package -> do
+            packageName <- packageGetName package
+            liftIO $ putStrLn $ groupName ++ ' ' : packageName
+            
+    return ()
 
 querySearch :: ALPM ()
 querySearch = do
