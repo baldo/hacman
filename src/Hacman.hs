@@ -6,11 +6,12 @@ where
 import Control.Monad.Trans
 import Distribution.ArchLinux.ALPM
 
-import Data.Maybe
+import Hacman.CommandLine
 
 main :: IO ()
 main = do
-    r <- alpm hacmanMain
+    command <- commandArgs
+    r <- alpm $ hacmanMain command
     case r of
         Left e ->
             print e
@@ -18,8 +19,11 @@ main = do
         Right () ->
             return ()
 
-hacmanMain :: ALPM ()
-hacmanMain = querySearchPackage ["haskell"]
+hacmanMain :: Command -> ALPM ()
+hacmanMain Query { search = True , parameters = [] }   = querySearch
+hacmanMain Query { search = True , parameters = pkgs } = querySearchPackage pkgs
+hacmanMain Query { search = False } = query
+hacmanMain _ = queryGroup
 
 query :: ALPM ()
 query = do

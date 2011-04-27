@@ -36,10 +36,11 @@ Executable hacman
     Build-Depends:
         base == 4.*,
         mtl  == 2.0.*,
-        alpm == 0.0.*
+        alpm == 0.0.*,
+        cmdargs == 0.6.*
 
     Ghc-Options:
         -Wall
 
     Other-Modules:
-
+      Hacman.CommandLine
